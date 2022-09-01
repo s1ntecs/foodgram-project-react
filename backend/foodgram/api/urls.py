@@ -1,11 +1,12 @@
 from django.contrib import admin
 from django.urls import include, path
+
 from rest_framework import routers
 
-from .views import (BlacklistRefreshView, DownloadShoppingCartViewSet,
-                    FavoriteViewSet, IngredientViewSet, ProductViewSet,
-                    RecipeViewSet, ShoppingCartViewSet, SubscribeViewSet,
-                    TagViewSet, UserViewSet)
+from .views import (AuthToken, DownloadShoppingCartViewSet, 
+                    ProductViewSet, RecipeViewSet, FavoriteViewSet,
+                    ShoppingCartViewSet, SubscribeViewSet, TagViewSet,
+                    UsersViewSet, set_password)
 
 app_name = 'api'
 
@@ -27,15 +28,21 @@ router.register(
     DownloadShoppingCartViewSet, basename='DownloadShoppingCart'
 )
 router.register(r'recipes', RecipeViewSet, basename='recipes')
-router.register(r'ingredient', IngredientViewSet, basename='ingredients')
 router.register(r'ingredients', ProductViewSet, basename='products')
 router.register(r'tags', TagViewSet, basename='tags')
-router.register(r'users', UserViewSet)
-router.register(r'auth', UserViewSet)
-
+router.register(r'users', UsersViewSet)
 
 urlpatterns = [
+    path(
+        'auth/token/login/',
+        AuthToken.as_view(),
+        name='login'),
+    path(
+        'users/set_password/',
+        set_password,
+        name='set_password'),
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('auth/token/logout/', BlacklistRefreshView.as_view(), name='logout'),
+    path('', include('djoser.urls')),
+    path('auth/', include('djoser.urls.authtoken')),
 ]

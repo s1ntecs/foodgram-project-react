@@ -1,6 +1,8 @@
 from django_filters import rest_framework as filters
-from recipes.models import Product, Recipe, Tag
+
 from rest_framework.exceptions import ValidationError
+
+from recipes.models import Product, Recipe, Tag
 
 
 class IngredientFilter(filters.FilterSet):

@@ -1,18 +1,4 @@
-from django.core.exceptions import ObjectDoesNotExist
-from rest_framework.exceptions import ValidationError
-
-from recipes.models import Ingredient, Product, Recipe, Tag, TagsRecipe
-
-
-def get_recipe(recipe_id):
-    """ Получает id рецепта и отдает рецепт"""
-    try:
-        recipe = Recipe.objects.get(id=recipe_id)
-    except ObjectDoesNotExist:
-        raise ValidationError(
-            {"errors": "velit"}
-        )
-    return recipe
+from recipes.models import Ingredient, Product, Recipe
 
 
 def get_recipe_ingredients_txt(shop_cart):
@@ -35,29 +21,11 @@ def get_recipe_ingredients_txt(shop_cart):
     return text
 
 
-def create_tags(tags_id, recipe):
-    """ Создаем тэги для рецепта"""
-    for tag_id in tags_id:
-        try:
-            tag = Tag.objects.get(id=tag_id)
-        except ObjectDoesNotExist:
-            raise ValidationError(
-                {"errors": "velit"}
-            )
-        tag = TagsRecipe.objects.create(
-                tag=tag, recipe=recipe)
-
-
-def create_ingredients(ingredients_data, recipe):
-    """ Создаем ингредиенты для рецепта"""
-    for cur_data in ingredients_data:
-        product_id = cur_data['id']
-        amount = cur_data['amount']
-        try:
-            product = Product.objects.get(id=product_id)
-        except ObjectDoesNotExist:
-            raise ValidationError(
-                {"errors": "velit"}
-            )
-        Ingredient.objects.create(
-            product_id=product, recipe=recipe, amount=amount)
+def create_ingredients_amount(self, ingredients_data, recipe):
+    Ingredient.objects.bulk_create(
+            [Ingredient(
+                product_id=Product.objects.get(id=ingredient['id']),
+                recipe=recipe,
+                amount=ingredient['amount']
+            ) for ingredient in ingredients_data]
+        )

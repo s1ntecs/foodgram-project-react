@@ -1,7 +1,9 @@
-# Create your models here.
 from colorfield.fields import ColorField
+
+from django.core import validators
 from django.db import models
 from django.db.models import UniqueConstraint
+
 from users.models import User
 
 
@@ -82,31 +84,15 @@ class Recipe(models.Model):
         blank=True)
     tags = models.ManyToManyField(
         Tag,
-        through='TagsRecipe',
         verbose_name="Тэги",
         related_name='recipe_tags')
-    cooking_time = models.PositiveIntegerField()
+    cooking_time = models.PositiveSmallIntegerField(
+        verbose_name='Время приготовления в мин.',
+        validators=[validators.MinValueValidator(
+            1, message='Время приготовления должно быть больше 1 мин.'), ])
 
     def __str__(self):
         return str(self.name)
-
-
-class TagsRecipe(models.Model):
-    recipe = models.ForeignKey(
-        Recipe,
-        on_delete=models.CASCADE,
-        verbose_name='рецепт',
-        related_name='recipe_tag',
-    )
-    tag = models.ForeignKey(
-        Tag,
-        on_delete=models.CASCADE,
-        verbose_name='тэги',
-        related_name='tags_recipe',
-    )
-
-    def __str__(self):
-        return self.tag
 
 
 class Ingredient(models.Model):
@@ -122,7 +108,13 @@ class Ingredient(models.Model):
         verbose_name='id продукта',
         related_name='product_ingredient',
     )
-    amount = models.IntegerField()
+    amount = models.PositiveSmallIntegerField(
+        default=1,
+        validators=(
+            validators.MinValueValidator(
+                1, message='Минимальное количество ингридиентов 1'),),
+        verbose_name='Количество',
+        )
 
     def __str__(self):
         return str(self.product_id)

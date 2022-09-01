@@ -9,7 +9,8 @@ class AdminOrReadOnly(permissions.BasePermission):
     def has_permission(self, request, view):
         if request.method in permissions.SAFE_METHODS:
             return True
-        return getattr(request.user, 'is_admin', False)
+        user = request.user
+        return user == user.is_admin
 
 
 class AdminModerAuthorOrReadOnly(permissions.BasePermission):
@@ -30,7 +31,8 @@ class AdminOrSuperuser(permissions.BasePermission):
     '''
 
     def has_permission(self, request, view):
-        return getattr(request.user, 'is_admin', False)
+        user = request.user
+        return user == user.is_admin
 
 
 class AuthorOrAuthenticated(permissions.BasePermission):
@@ -46,25 +48,3 @@ class AuthorOrAuthenticated(permissions.BasePermission):
     def has_object_permission(self, request, view, obj):
         return (request.method in permissions.SAFE_METHODS
                 or obj.author == request.user)
-
-
-class Authenticated(permissions.BasePermission):
-    '''
-    Дает право на запись аутентифицированным пользователям.
-    '''
-    message = "Adding customers not allowed."
-
-    def has_permission(self, request, view):
-        return request.user.is_authenticated
-
-
-class Unauthorized(permissions.BasePermission):
-    '''
-    Разрешает доступ админу или суперюзеру.
-    '''
-    message = "You are already using the token."
-
-    def has_permission(self, request, view):
-        if request.user.is_authenticated:
-            return False
-        return True
