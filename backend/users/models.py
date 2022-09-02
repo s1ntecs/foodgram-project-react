@@ -46,7 +46,7 @@ class User(AbstractUser):
         validators=[validate_password],
         help_text=_(
             'Required. min - 8 max - 20 characters, fewer.')
-        )
+    )
     is_subscribed = models.BooleanField(default=False)
 
     class Meta:

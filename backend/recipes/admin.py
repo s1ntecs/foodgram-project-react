@@ -4,6 +4,7 @@ from .models import Favorite, Ingredient, Product, Recipe, Tag
 
 EMPTY = '-пусто-'
 
+
 @register(Tag)
 class TagAdmin(ModelAdmin):
     list_display = ('id', 'name', 'slug', 'color')
@@ -30,6 +31,7 @@ class RecipeAdmin(ModelAdmin):
 
     def added_in_favorites(self, obj):
         return obj.favorite_recipe.count()
+
 
 @register(Ingredient)
 class IngredientAdmin(ModelAdmin):

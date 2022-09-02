@@ -39,7 +39,7 @@ class Subscribe(models.Model):
         constraints = [UniqueConstraint(
             fields=['user', 'author'],
             name='unique_subscribe',
-            )]
+        )]
 
     def __str__(self):
         return f'{self.author} {self.user}'
@@ -114,7 +114,7 @@ class Ingredient(models.Model):
             validators.MinValueValidator(
                 1, message='Минимальное количество ингридиентов 1'),),
         verbose_name='Количество',
-        )
+    )
 
     def __str__(self):
         return str(self.product_id)
@@ -138,7 +138,7 @@ class Favorite(models.Model):
         constraints = [UniqueConstraint(
                 fields=['user', 'recipe'],
                 name='unique_favorite',
-            )]
+        )]
 
     def __str__(self):
         return self.recipe
@@ -162,7 +162,7 @@ class ShoppingCart(models.Model):
         constraints = [UniqueConstraint(
                 fields=['user', 'recipe'],
                 name='unique_shopping_cart',
-            )]
+        )]
 
     def __str__(self):
         return self.recipe
