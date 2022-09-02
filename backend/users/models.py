@@ -42,7 +42,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     password = models.CharField(
-        max_length=20,
+        max_length=150,
         validators=[validate_password],
         help_text=_(
             'Required. min - 8 max - 20 characters, fewer.')
