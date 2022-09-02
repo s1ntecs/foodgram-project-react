@@ -161,12 +161,12 @@ class DownloadShoppingCartViewSet(serializers.ModelSerializer):
         fields = ('ingredient')
 
 
-class TagsSerializer(serializers.ModelSerializer):
+class TagSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
-        fields = ('id', 'name', 'color', 'slug')
-        # extra_kwargs = {'color': {'required': True}}
+        fields = (
+            'id', 'name', 'color', 'slug',)
 
 
 class RecipeListSerializer(serializers.ModelSerializer):

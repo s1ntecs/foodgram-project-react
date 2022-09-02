@@ -126,15 +126,13 @@ class ShoppingCartViewSet(viewsets.ViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class TagViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
-    """ Теги."""
+class TagsViewSet(viewsets.ModelViewSet):
+    """Список тэгов."""
 
     queryset = Tag.objects.all()
     serializer_class = TagsSerializer
     permission_classes = [AdminOrReadOnly]
     pagination_class = None
-    filter_backends = [filters.OrderingFilter, ]
-    ordering = ['-id']
 
 
 class ProductViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):

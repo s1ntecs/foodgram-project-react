@@ -5,12 +5,13 @@ from rest_framework import routers
 
 from .views import (AuthToken, DownloadShoppingCartViewSet,
                     ProductViewSet, RecipeViewSet, FavoriteViewSet,
-                    ShoppingCartViewSet, SubscribeViewSet, TagViewSet,
+                    ShoppingCartViewSet, SubscribeViewSet, TagsViewSet,
                     UsersViewSet, set_password)
 
 app_name = 'api'
 
 router = routers.DefaultRouter()
+router.register('tags', TagsViewSet)
 router.register(
     r'users/(?P<author_id>\d+)/subscribe',
     SubscribeViewSet, basename='SubscribeList'
@@ -29,7 +30,6 @@ router.register(
 )
 router.register(r'recipes', RecipeViewSet, basename='recipes')
 router.register(r'ingredients', ProductViewSet, basename='products')
-router.register(r'tags', TagViewSet, basename='tags')
 router.register(r'users', UsersViewSet)
 
 urlpatterns = [
