@@ -28,4 +28,4 @@ def create_ingredients_amount(self, ingredients_data, recipe):
                 recipe=recipe,
                 amount=ingredient['amount']
             ) for ingredient in ingredients_data]
-        )
+    )
