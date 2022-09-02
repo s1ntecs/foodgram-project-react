@@ -161,7 +161,7 @@ class DownloadShoppingCartViewSet(serializers.ModelSerializer):
         fields = ('ingredient')
 
 
-class TagSerializer(serializers.ModelSerializer):
+class TagsSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Tag
