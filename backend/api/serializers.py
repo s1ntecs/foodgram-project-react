@@ -166,7 +166,7 @@ class TagsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Tag
         fields = ('id', 'name', 'color', 'slug')
-        extra_kwargs = {'color': {'required': True}}
+        # extra_kwargs = {'color': {'required': True}}
 
 
 class RecipeListSerializer(serializers.ModelSerializer):
