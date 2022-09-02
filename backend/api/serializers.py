@@ -58,7 +58,7 @@ class TokenSerializer(serializers.Serializer):
                     raise serializers.ValidationError(
                         'Вы не указали пользователя',
                         code='authorization')
-            else: 
+            else:
                 raise serializers.ValidationError(
                         'Пользователя с таким email нет',
                         code='authorization')
