@@ -150,6 +150,16 @@ class IngredientListSerializer(serializers.ModelSerializer):
         return obj.product_id.measurement_unit
 
 
+class IngredientsEditSerializer(serializers.ModelSerializer):
+
+    id = serializers.IntegerField()
+    amount = serializers.IntegerField()
+
+    class Meta:
+        model = Ingredient
+        fields = ('id', 'amount')
+
+
 class DownloadShoppingCartViewSet(serializers.ModelSerializer):
     ingredient = serializers.FileField(
         allow_empty_file=True,
@@ -178,7 +188,9 @@ class RecipeListSerializer(serializers.ModelSerializer):
     )
     is_favorited = serializers.SerializerMethodField(read_only=True)
     is_in_shopping_cart = serializers.SerializerMethodField(read_only=True)
-    ingredients = serializers.SerializerMethodField(read_only=True)
+    ingredients = IngredientsEditSerializer(
+        many=True)
+    # ingredients = serializers.SerializerMethodField(read_only=True)
 
     def get_ingredients(self, instance):
         recipe = instance
