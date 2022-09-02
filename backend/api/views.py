@@ -132,7 +132,7 @@ class TagViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Tag.objects.all()
     serializer_class = TagsSerializer
     permission_classes = [IsAuthenticated]
-    pagination_class = PageNumberPagination
+    pagination_class = None
     filter_backends = [filters.OrderingFilter, ]
     ordering = ['-id']
 

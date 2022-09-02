@@ -3,7 +3,7 @@ from django.urls import include, path
 
 from rest_framework import routers
 
-from .views import (AuthToken, DownloadShoppingCartViewSet, 
+from .views import (AuthToken, DownloadShoppingCartViewSet,
                     ProductViewSet, RecipeViewSet, FavoriteViewSet,
                     ShoppingCartViewSet, SubscribeViewSet, TagViewSet,
                     UsersViewSet, set_password)
