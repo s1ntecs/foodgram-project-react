@@ -303,6 +303,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             context={
                 'request': self.context.get('request')
             }).data
+
     class Meta:
         model = Recipe
         fields = ('id', 'author', 'name', 'image', 'text',
