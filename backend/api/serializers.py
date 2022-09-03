@@ -188,9 +188,7 @@ class RecipeListSerializer(serializers.ModelSerializer):
     )
     is_favorited = serializers.SerializerMethodField(read_only=True)
     is_in_shopping_cart = serializers.SerializerMethodField(read_only=True)
-    ingredients = IngredientsEditSerializer(
-        many=True)
-    # ingredients = serializers.SerializerMethodField(read_only=True)
+    ingredients = serializers.SerializerMethodField(read_only=True)
 
     def get_ingredients(self, instance):
         recipe = instance
@@ -232,9 +230,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         slug_field='username',
         read_only=True,
     )
-    ingredients = IngredientListSerializer(
-        many=True,
-        required=True)
+    ingredients = IngredientsEditSerializer(
+        many=True)
     tags = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Tag.objects.all())
