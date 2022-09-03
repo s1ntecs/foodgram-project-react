@@ -1,3 +1,5 @@
+from django.shortcuts import get_object_or_404
+
 from recipes.models import Ingredient, Product, Recipe
 
 
@@ -31,4 +33,4 @@ def create_ingredients_amount(self, ingredients_data, recipe):
                 recipe=recipe,
                 amount=ingredient_item.get('amount')
             ) for ingredient_item in ingredients_data]
-        )
+    )
