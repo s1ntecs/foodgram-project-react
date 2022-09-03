@@ -167,6 +167,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
         recipe = Recipe.objects.all()
         return recipe
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
     def get_object(self):
         recipe_id = self.kwargs.get('name')
         recipe = get_object_or_404(Recipe, id=recipe_id)
