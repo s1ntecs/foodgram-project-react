@@ -226,13 +226,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         max_length=None,
         use_url=True,
     )
-    #author = serializers.SlugRelatedField(
-        # slug_field='username',
-        # read_only=True,
-    #)
-    #ingredients = IngredientListSerializer(
-        # many=True,
-        # required=True)
     ingredients = IngredientsEditSerializer(
         required=True,
         many=True)
