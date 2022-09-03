@@ -239,6 +239,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         ingredients = data['ingredients']
         ingredient_list = []
         for items in ingredients:
+            print(items)
             ingredient = get_object_or_404(
                 Product, id=items['id'])
             if ingredient in ingredient_list:
@@ -275,7 +276,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         for ingredient in ingredients:
             Ingredient.objects.create(
                 recipe=recipe,
-                recipe_id=ingredient.get('id'),
+                ingredient_id=ingredient.get('id'),
                 amount=ingredient.get('amount'), )
 
     def create(self, validated_data):
@@ -289,13 +290,20 @@ class RecipeSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         if 'ingredients' in validated_data:
             ingredients = validated_data.pop('ingredients')
-            instance.recipe_id.clear()
+            instance.ingredients.clear()
             self.create_ingredients(ingredients, instance)
         if 'tags' in validated_data:
             instance.tags.set(
                 validated_data.pop('tags'))
         return super().update(
             instance, validated_data)
+
+    def to_representation(self, instance):
+        return RecipeListSerializer(
+            instance,
+            context={
+                'request': self.context.get('request')
+            }).data
 
     def to_representation(self, instance):
         return RecipeListSerializer(
