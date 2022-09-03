@@ -226,17 +226,24 @@ class RecipeSerializer(serializers.ModelSerializer):
         max_length=None,
         use_url=True,
     )
-    author = serializers.SlugRelatedField(
-        slug_field='username',
-        read_only=True,
-    )
+    #author = serializers.SlugRelatedField(
+        # slug_field='username',
+        # read_only=True,
+    #)
+    #ingredients = IngredientListSerializer(
+        # many=True,
+        # required=True)
     ingredients = IngredientsEditSerializer(
+        required=True,
         many=True)
     tags = serializers.PrimaryKeyRelatedField(
         many=True,
+        required=True,
         queryset=Tag.objects.all())
 
     def validate_ingredients(self, value):
+        for value in value:
+            print(value['amount'])
         try:
             ingredients = self.initial_data.get('ingredients')
         except KeyError:
@@ -295,6 +302,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         model = Recipe
         fields = ('id', 'author', 'name', 'image', 'text',
                   'ingredients', 'tags', 'cooking_time')
+        read_only_fields = ('author',)
 
 
 class RecipesShortSerializer(serializers.ModelSerializer):

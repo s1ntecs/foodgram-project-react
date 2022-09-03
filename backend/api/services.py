@@ -24,8 +24,11 @@ def get_recipe_ingredients_txt(shop_cart):
 def create_ingredients_amount(self, ingredients_data, recipe):
     Ingredient.objects.bulk_create(
             [Ingredient(
-                product_id=Product.objects.get(id=ingredient['id']),
+                product_id=get_object_or_404(
+                    Product,
+                    id=ingredient_item.get('id')
+                ),
                 recipe=recipe,
-                amount=ingredient['amount']
-            ) for ingredient in ingredients_data]
-    )
+                amount=ingredient_item.get('amount')
+            ) for ingredient_item in ingredients_data]
+        )
