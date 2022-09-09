@@ -9,7 +9,7 @@
 [![GitHub%20Actions](https://img.shields.io/badge/-GitHub%20Actions-464646?style=flat-square&logo=GitHub%20actions)](https://github.com/features/actions)
 [![Yandex.Cloud](https://img.shields.io/badge/-Yandex.Cloud-464646?style=flat-square&logo=Yandex.Cloud)](https://cloud.yandex.ru/)
 # Продуктовый помощник - Foodgram
-
+Проект запущен и доступен по [адресу]http://84.201.143.199
 ## Самая актуальная версия всемирно известного портала Foodgram.
 
 «Продуктовый помощник»: приложение, на котором пользователи публикуют рецепты, подписываться на публикации других авторов и добавлять рецепты в избранное. Сервис «Список покупок» позволит пользователю создавать список продуктов, которые нужно купить для приготовления выбранных блюд.
@@ -103,7 +103,6 @@ sudo docker-compose exec web python manage.py load_data
 ```
  - Проект будет доступен по вашему IP
 
-Проект запущен и доступен по [адресу](http://84.201.143.199/)
 ## Лицензия
 
 **MIT**
