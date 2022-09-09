@@ -78,9 +78,7 @@ class SubscribeViewSet(viewsets.ViewSet):
                 {"errors": "Вы уже подписаны на автора"}
             )
         Subscribe.objects.create(author=author, user=request.user)
-        serializer = SubscriptionsSerializer(
-            author
-            )
+        serializer = SubscriptionsSerializer(author)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, author_id):
