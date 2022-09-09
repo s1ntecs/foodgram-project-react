@@ -1,16 +1,13 @@
 from django_filters import rest_framework as filters
+from rest_framework.filters import SearchFilter
 
 from rest_framework.exceptions import ValidationError
 
-from recipes.models import Product, Recipe, Tag
+from recipes.models import Recipe, Tag
 
 
-class IngredientFilter(filters.FilterSet):
-    name = filters.CharFilter(lookup_expr='startswith')
-
-    class Meta:
-        model = Product
-        fields = ['name']
+class IngredientSearchFilter(SearchFilter):
+    search_param = 'name'
 
 
 class RecipeFilter(filters.FilterSet):

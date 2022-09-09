@@ -6,7 +6,7 @@ load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = 's^^=64zx$7a&-l$jz87u1$=^wa_z6_f+m6uze18946__iyh6+f'
+SECRET_KEY = os.getenv('SECRET_KEY', default='s^^=64zx$7a&-l$jz87u1$=^wa_z6_f+m6uze18946__iyh6+f')
 
 DEBUG = True
 
@@ -118,8 +118,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static/'),)
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',
@@ -128,7 +126,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 5,
+    'PAGE_SIZE': 6,
 }
 
 

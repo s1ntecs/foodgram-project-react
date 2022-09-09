@@ -12,7 +12,7 @@ class Command(BaseCommand):
     """ Команда предназначена для импорта csv данных в БД"""
     def handle(self, *args, **options):
         file_path = os.path.join(
-            settings.BASE_DIR, 'static\\data\\ingredients.csv')
+            settings.BASE_DIR, 'static/data/ingredients.csv')
         with open(file_path, encoding='utf-8') as f:
             reader = csv.reader(f)
             first_line = 1

@@ -1,4 +1,4 @@
-version: '3.9'
+version: '3.8'
 services:
 
   db:
@@ -9,7 +9,7 @@ services:
       - ./.env
 
   backend:
-    image: sintecs/foodgram:latest
+    image: sintecs/foodgram:v2.0
     restart: always
     volumes:
       - data_value:/code/data/
@@ -21,7 +21,7 @@ services:
       - ./.env
 
   frontend:
-    image: sintecs/foodgram_frontend:latest
+    image: sintecs/foodgram_frontend:v2.0
     volumes:
       - ../frontend/:/app/result_build/
     depends_on:

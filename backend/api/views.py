@@ -19,7 +19,7 @@ from rest_framework.response import Response
 from users.models import User
 from recipes.models import (Favorite, Product, Recipe,
                             ShoppingCart, Subscribe, Tag)
-from .filters import IngredientFilter, RecipeFilter
+from .filters import IngredientSearchFilter, RecipeFilter
 from .paginators import SubscribtionPagintation
 from .permissions import AdminOrReadOnly, AuthorOrAuthenticated
 from .serializers import (OneRecipeListSerializer, ProductSerializer,
@@ -78,7 +78,10 @@ class SubscribeViewSet(viewsets.ViewSet):
                 {"errors": "Вы уже подписаны на автора"}
             )
         Subscribe.objects.create(author=author, user=request.user)
-        return Response(status=status.HTTP_201_CREATED)
+        serializer = SubscriptionsSerializer(
+            author
+            )
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def delete(self, request, author_id):
         try:
@@ -141,8 +144,7 @@ class ProductViewSet(mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [AdminOrReadOnly]
-    filter_backends = [filters.OrderingFilter, filters.SearchFilter, ]
-    filterset_class = IngredientFilter
+    filter_backends = (IngredientSearchFilter,)
     search_fields = ('^name',)
     pagination_class = None
 
