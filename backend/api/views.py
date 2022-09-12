@@ -153,10 +153,9 @@ class RecipeViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthorOrAuthenticated]
     lookup_field = 'name'
     pagination_class = PageNumberPagination
-    filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend, )
     filterset_class = RecipeFilter
     search_fields = ['name']
-    ordering = ['-id']
 
     def get_serializer_class(self):
         if self.action == SAFE_METHODS:
@@ -164,7 +163,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
         return RecipeSerializer
 
     def get_queryset(self):
-        recipe = Recipe.objects.all()
+        recipe = Recipe.objects.all().order_by('-id')
         return recipe
 
     def perform_create(self, serializer):
@@ -222,6 +221,7 @@ class UsersViewSet(UserViewSet):
         """Ваши подписки."""
 
         user_subscriptions = User.objects.filter(follow__user=request.user)
+
         page = self.paginate_queryset(user_subscriptions)
         serializer = SubscriptionsSerializer(
             page,

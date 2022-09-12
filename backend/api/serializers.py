@@ -259,7 +259,12 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def validate_ingredients(self, ingredients):
         ingredient_list = []
+        print(f'ingrediends = {ingredients}')
         for items in ingredients:
+            amount = items['amount']
+            if int(amount) <= 0:
+                raise serializers.ValidationError(
+                    'Минимальное величина ингридиентов не может = 0')
             ingredient = get_object_or_404(
                 Product, id=items['id'])
             if ingredient in ingredient_list:
@@ -280,7 +285,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         if 'ingredients' in validated_data:
             ingredients = validated_data.pop('ingredients')
             instance.ingredients.clear()
-            self.create_ingredients(ingredients, instance)
+            create_ingredients_amount(self, ingredients, instance)
         if 'tags' in validated_data:
             instance.tags.set(
                 validated_data.pop('tags'))
@@ -303,13 +308,22 @@ class RecipesShortSerializer(serializers.ModelSerializer):
 
 
 class SubscriptionsSerializer(UserSerializer):
-    recipes = RecipesShortSerializer(many=True, read_only=True)
+    recipes = serializers.SerializerMethodField(read_only=True)
     recipes_count = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = User
         fields = ('email', 'id', 'username', 'first_name',
                   'last_name', 'is_subscribed', 'recipes', 'recipes_count')
+
+    def get_recipes(self, obj):
+        print(f'obiekt - {obj}')
+        recipes = (
+            obj.recipes.all()[:int(3)])
+        print(f'recept - {recipes}')
+        return RecipesShortSerializer(
+            recipes,
+            many=True).data
 
     def get_recipes_count(self, obj):
         return obj.recipes.count()

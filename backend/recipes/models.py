@@ -65,7 +65,7 @@ class Recipe(models.Model):
         User,
         on_delete=models.CASCADE,
         related_name='recipes',
-        verbose_name='Подписчик'
+        verbose_name='Автор'
     )
     name = models.CharField(
         max_length=200,
@@ -111,9 +111,9 @@ class Ingredient(models.Model):
     )
     amount = models.PositiveSmallIntegerField(
         default=1,
-        validators=(
+        validators=[
             validators.MinValueValidator(
-                1, message='Минимальное количество ингридиентов 1'),),
+                1, message='Минимальное количество ингридиентов 1'), ],
         verbose_name='Количество',
     )
 

@@ -1,9 +1,11 @@
 from django_filters import rest_framework as filters
+from django.contrib.auth import get_user_model
 from rest_framework.filters import SearchFilter
 
 from rest_framework.exceptions import ValidationError
 
 from recipes.models import Recipe, Tag
+User = get_user_model()
 
 
 class IngredientSearchFilter(SearchFilter):
@@ -16,6 +18,7 @@ class RecipeFilter(filters.FilterSet):
         queryset=Tag.objects.all(),
         to_field_name='slug',
     )
+    author = filters.ModelChoiceFilter(queryset=User.objects.all())
     is_favorited = filters.BooleanFilter(
         method='get_is_favorited'
     )

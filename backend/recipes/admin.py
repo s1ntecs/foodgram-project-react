@@ -1,6 +1,7 @@
 from django.contrib.admin import ModelAdmin, register
 
-from .models import Favorite, Ingredient, Product, Recipe, Tag
+from .models import (Favorite, Ingredient, Product, Recipe, ShoppingCart,
+                     Subscribe, Tag)
 
 EMPTY = '-пусто-'
 
@@ -45,6 +46,20 @@ class IngredientAdmin(ModelAdmin):
 
 @register(Favorite)
 class FavoriteAdmin(ModelAdmin):
+    list_display = ('user', 'recipe',)
+    list_filter = ('user', 'recipe',)
+    empty_value_display = EMPTY
+
+
+@register(Subscribe)
+class SubscribeAdmin(ModelAdmin):
+    list_display = ('user', 'author',)
+    list_filter = ('user', 'author',)
+    empty_value_display = EMPTY
+
+
+@register(ShoppingCart)
+class ShopCartAdmin(ModelAdmin):
     list_display = ('user', 'recipe',)
     list_filter = ('user', 'recipe',)
     empty_value_display = EMPTY
